@@ -1,0 +1,79 @@
+name: 自动更新排行榜 README
+
+on:
+  schedule:
+    - cron: '0 2 * * *'   # 每天 UTC 2:00（北京时间 10:00）
+  workflow_dispatch:       # 支持手动触发
+
+jobs:
+  update-readme:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: 拉取最新排行榜数据
+        run: |
+          echo "### ☁️ 云端大模型 TOP 5" > /tmp/ranking_data.md
+          curl -sL "https://www.playje.top/api/rankings-v2/llm_cloud?limit=5" --max-time 10 | python3 -c "
+import sys,json
+d=json.load(sys.stdin)
+for i in d.get('items',[]):
+    v = i.get('vote_count',0)
+    n = i.get('name','')
+    c = i.get('company','')
+    print(f'| {i[\"rank\"]} | {n} | {c} | {v}票 |')
+" >> /tmp/ranking_data.md
+
+          echo -e "\n### 🏠 本地模型 TOP 3" >> /tmp/ranking_data.md
+          curl -sL "https://www.playje.top/api/rankings-v2/llm_local?limit=3" --max-time 10 | python3 -c "
+import sys,json
+d=json.load(sys.stdin)
+for i in d.get('items',[]):
+    n = i.get('name','')
+    c = i.get('company','')
+    v = i.get('vote_count',0)
+    print(f'| {i[\"rank\"]} | {n} | {c} | {v}票 |')
+" >> /tmp/ranking_data.md
+
+          echo -e "\n### 🤖 AI Agent TOP 3" >> /tmp/ranking_data.md
+          curl -sL "https://www.playje.top/api/rankings-v2/agent?limit=3" --max-time 10 | python3 -c "
+import sys,json
+d=json.load(sys.stdin)
+for i in d.get('items',[]):
+    n = i.get('name','')
+    c = i.get('company','')
+    v = i.get('vote_count',0)
+    print(f'| {i[\"rank\"]} | {n} | {c} | {v}票 |')
+" >> /tmp/ranking_data.md
+
+      - name: 更新 README
+        run: |
+          HEADER=$(head -10 README.md | grep -B10 '## 云端')
+          DATA=$(cat /tmp/ranking_data.md)
+          FOOTER="\n\n---\n📊 数据来源：[PlayJE AI 排行榜](https://www.playje.top/rankings/) — 每日自动更新 · 你的每一票都在影响排名"
+          
+          # 替换两块数据之间的内容
+          python3 -c "
+import re
+with open('README.md') as f:
+    c = f.read()
+# 找到 ## 云端 到 --- 之间的内容并替换
+start = c.find('## 云端')
+end = c.find('---', start)
+if start >= 0:
+    new_section = open('/tmp/ranking_data.md').read().strip()
+    c = c[:start] + new_section + '\n\n' + c[end:]
+    with open('README.md','w') as f:
+        f.write(c)
+    print('README 已更新')
+else:
+    print('未找到 ## 云端 标记，追加到文件末尾')
+    with open('README.md','a') as f:
+        f.write('\n' + open('/tmp/ranking_data.md').read().strip())
+"
+
+      - name: 提交修改
+        run: |
+          git config user.name "playje-bot"
+          git config user.email "bot@playje.top"
+          git diff --quiet || git add README.md && git commit -m "📊 自动更新排行榜数据 $(date +%Y-%m-%d)" && git push
