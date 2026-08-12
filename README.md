@@ -7,38 +7,22 @@
 
 ---
 
-## 云端大模型 TOP 5
+### ☁️ 云端大模型 TOP 5
+| 1 | DeepSeek V4 Flash | 深度求索 | 1票 |
+| 2 | DeepSeek V4 Pro | 深度求索 | 1票 |
+| 3 | Claude Opus 4.7 | Anthropic | 1票 |
+| 4 | Claude Opus 4.8 | Anthropic | 1票 |
+| 5 | Claude Sonnet 4.5 | Anthropic | 1票 |
 
-| 排名 | 模型 | 公司 | 描述 |
-|:----:|:----|:-----|:-----|
-| 1 | DeepSeek V4 Flash | 深度求索 | 开源旗舰，速度快性价比高 |
-| 2 | DeepSeek V4 Pro | 深度求索 | 最强推理模型 |
-| 3 | Claude Opus 4.7 | Anthropic | 综合能力最强 |
-| 4 | Claude Opus 4.8 | Anthropic | 编程优化升级版 |
-| 5 | Claude Sonnet 4.5 | Anthropic | 速度与质量平衡 |
+### 🏠 本地模型 TOP 3
+| 1 | Qwen3-72B | 阿里巴巴 | 0票 |
+| 2 | Qwen3-32B | 阿里巴巴 | 0票 |
+| 3 | Qwen3-14B | 阿里巴巴 | 0票 |
 
-> [查看完整云端排行（101 个模型）→](https://www.aibunkhouse.com/rankings/)
-
-## 本地大模型 TOP 3
-
-| 排名 | 模型 | 公司 |
-|:----:|:----|:-----|
-| 1 | Qwen3-72B | 阿里巴巴 |
-| 2 | Qwen3-32B | 阿里巴巴 |
-| 3 | Qwen3-14B | 阿里巴巴 |
-
-> [查看完整本地模型排行（48 个）→](https://www.aibunkhouse.com/rankings/)
-
-## AI Agent TOP 3
-
-| 排名 | 工具 | 公司 |
-|:----:|:----|:-----|
-| 1 | Claude Code | Anthropic |
-| 2 | Cursor | Cursor Inc |
-| 3 | Windsurf | Codeium |
-
-> [查看完整 Agent 排行（68 个）→](https://www.aibunkhouse.com/rankings/)
-
+### 🤖 AI Agent TOP 3
+| 1 | Claude Code | Anthropic | 0票 |
+| 2 | Cursor | Cursor Inc | 0票 |
+| 3 | Windsurf | Codeium | 0票 |
 ---
 
 📊 数据来源：[AI House 排行榜](https://www.aibunkhouse.com/rankings/) — 你的每一票都在影响排名
